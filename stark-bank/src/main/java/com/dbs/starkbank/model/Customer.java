@@ -2,6 +2,9 @@ package com.dbs.starkbank.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Customer {
@@ -16,6 +19,7 @@ public class Customer {
     private String gender;
     private LocalDate dateOfBirth;
     private String nationalId;
-
     //Need to add Address.
+    @OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Account> accounts = new HashSet<>();
 }
