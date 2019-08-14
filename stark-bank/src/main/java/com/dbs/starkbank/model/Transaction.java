@@ -17,11 +17,11 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "credited_account", nullable = false)
-    private long creditedAccount;
+    private Account creditedAccount;
 
     @ManyToOne
     @JoinColumn(name = "debited_account", nullable = false)
-    private long debitedAccount;
+    private Account debitedAccount;
 
 
     @Override
