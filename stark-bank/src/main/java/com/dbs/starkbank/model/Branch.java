@@ -13,7 +13,8 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    // add address
+    @OneToOne
+    private Address address;
     private String IFSC;
 
     @ManyToOne

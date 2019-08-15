@@ -9,9 +9,10 @@ public class BankUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @ManyToOne
+    private String userName;
+    private String password;
+    @OneToMany(mappedBy = "bankUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Customer> customers = new HashSet<>();
 
-    //to do
+
 }
