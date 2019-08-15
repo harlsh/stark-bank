@@ -22,4 +22,10 @@ public class Address {
     @OneToOne(mappedBy = "address")
     private Customer customer;
 
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(mappedBy = "address")
+    private Branch branch;
+
+
 }

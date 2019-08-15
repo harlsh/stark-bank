@@ -24,6 +24,9 @@ public class Customer {
     private String userId;
     private String password;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Branch branch;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
