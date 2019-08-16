@@ -2,6 +2,8 @@ package com.dbs.starkbank.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -15,12 +17,15 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private long accountNumber;
 
     private String accountName;
 
     private double balance;
 
+    @ToString.Exclude
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)

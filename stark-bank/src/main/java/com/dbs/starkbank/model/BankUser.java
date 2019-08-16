@@ -1,5 +1,6 @@
 package com.dbs.starkbank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,15 +19,15 @@ public class BankUser {
     @OneToMany(mappedBy = "bankUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Customer> customers = new HashSet<>();
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "branch_id", nullable = false)
     private Branch branch;
 
     public void addCustomer(Customer customer){
-        customers.add(customer);
+        this.customers.add(customer);
         customer.setBankUser(this);
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

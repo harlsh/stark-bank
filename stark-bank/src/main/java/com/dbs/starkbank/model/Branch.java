@@ -21,6 +21,7 @@ public class Branch {
     @OneToMany(mappedBy="branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Account> accounts = new HashSet<>();
 
+    @ToString.Exclude
     @OneToMany(mappedBy="branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<BankUser> bankUsers = new HashSet<>();
 
@@ -29,9 +30,19 @@ public class Branch {
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Customer> customers = new HashSet<>();
 
+    public void addBankUser(BankUser bankUser){
+        this.bankUsers.add(bankUser);
+        bankUser.setBranch(this);
+    }
+
+    public void addCustomer(Customer customer){
+        this.customers.add(customer);
+        customer.setBranch(this);
+    }
     @JsonIgnore
     public BankUser getRandomBankUser(){
         List<BankUser> bankUsers = new ArrayList<>(this.bankUsers);
+        System.out.println(bankUsers);
         Collections.shuffle(bankUsers);
         return bankUsers.get(0);
     }

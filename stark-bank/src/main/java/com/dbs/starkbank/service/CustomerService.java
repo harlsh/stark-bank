@@ -11,5 +11,4 @@ public interface CustomerService {
     List<Customer> listAll();
     Customer findById(long id);
     void deleteCustomer(long id);
-    void assignBankUser(Customer customer);
 }

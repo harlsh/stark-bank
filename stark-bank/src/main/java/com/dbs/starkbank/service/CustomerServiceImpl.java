@@ -1,8 +1,10 @@
 package com.dbs.starkbank.service;
 
 import com.dbs.starkbank.model.BankUser;
+import com.dbs.starkbank.model.Branch;
 import com.dbs.starkbank.model.Customer;
 import com.dbs.starkbank.repository.BankUserRepository;
+import com.dbs.starkbank.repository.BranchRepository;
 import com.dbs.starkbank.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,18 +17,23 @@ import java.util.Set;
 public class CustomerServiceImpl implements CustomerService {
 
     CustomerRepository customerRepository;
-    BankUserRepository bankUserRepository;
+    BranchRepository branchRepository;
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository, BankUserRepository bankUserRepository){
-        this.bankUserRepository = bankUserRepository;
+    public CustomerServiceImpl(CustomerRepository customerRepository, BranchRepository branchRepository){
+        this.branchRepository = branchRepository;
         this.customerRepository = customerRepository;
     }
+//    @Override
+//    public Customer saveCustomer(Customer customer, long id) {
+//        Branch branch = branchRepository.findById(id).get();
+//        customer.setBranch(branch);
+//        return customerRepository.save(customer);
+//    }
+
     @Override
     public Customer saveCustomer(Customer customer) {
-        //Do not save to the DB, instead pass this to the bankuser.
         return customerRepository.save(customer);
     }
-
     @Override
     public List<Customer> listAll() {
         return this.customerRepository.findAll();
@@ -45,11 +52,6 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.deleteById(id);
     }
 
-    @Override
-    public void assignBankUser(Customer customer) {
-        BankUser bankUser = customer.getBranch().getRandomBankUser();
-        bankUser.addCustomer(customer);
-        customerRepository.save(customer);
-    }
+
 
 }

@@ -1,18 +1,24 @@
 package com.dbs.starkbank.service;
 
+import com.dbs.starkbank.model.BankUser;
 import com.dbs.starkbank.model.Branch;
+import com.dbs.starkbank.model.Customer;
+import com.dbs.starkbank.repository.BankUserRepository;
 import com.dbs.starkbank.repository.BranchRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class BranchServiceImpl implements BranchService {
     private BranchRepository branchRepository;
-
-    public BranchServiceImpl(BranchRepository branchRepository){
+    private BankUserRepository bankUserRepository;
+    public BranchServiceImpl(BranchRepository branchRepository, BankUserRepository bankUserRepository){
         this.branchRepository = branchRepository;
+        this.bankUserRepository = bankUserRepository;
     }
 
     @Override
@@ -37,5 +43,44 @@ public class BranchServiceImpl implements BranchService {
         branchRepository.deleteById(id);
     }
 
+    @Override
+    public Set<BankUser> listAllBankUsers(long id) {
+        return this.branchRepository.findById(id).get().getBankUsers();
+    }
+
+    @Override
+    public Branch saveBankUser(long id, BankUser bankUser) {
+        Branch branch = this.branchRepository.findById(id).get();
+        branch.addBankUser(bankUser);
+        return this.branchRepository.save(branch);
+    }
+
+    @Override
+    public BankUser getBankUser(long id, long bid) {
+        return null;
+    }
+
+    @Override
+    public Set<Customer> listAllCustomers(long id) {
+        return this.branchRepository.findById(id).get().getCustomers();
+    }
+
+    @Transactional
+    @Override
+    public Customer saveCustomer(Customer customer, long id) {
+        Branch branch = this.branchRepository.findById(id).get();
+        branch.addCustomer(customer);
+        this.branchRepository.save(branch);
+        assignBankUser(customer);
+        return customer;
+    }
+
+    @Override
+    public void assignBankUser(Customer customer) {
+        System.out.println(customer.getBranch());
+        BankUser bankUser = customer.getBranch().getRandomBankUser();
+        bankUser.addCustomer(customer);
+        this.bankUserRepository.save(bankUser);
+    }
 
 }

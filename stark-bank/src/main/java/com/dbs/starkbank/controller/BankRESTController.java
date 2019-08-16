@@ -1,13 +1,17 @@
 package com.dbs.starkbank.controller;
 
+import com.dbs.starkbank.model.Account;
+import com.dbs.starkbank.model.BankUser;
 import com.dbs.starkbank.model.Branch;
 import com.dbs.starkbank.model.Customer;
+import com.dbs.starkbank.service.BankUserService;
 import com.dbs.starkbank.service.BranchService;
 import com.dbs.starkbank.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1")
@@ -19,16 +23,30 @@ public class BankRESTController {
     @Autowired
     private BranchService branchService;
 
+    @Autowired
+    private BankUserService bankUserService;
+
     @GetMapping( "/customers")
     public List<Customer> listAllCustomers(){
         return this.customerService.listAll();
     }
 
-    @PostMapping("/customers")
-    public void saveCustomer(@RequestBody Customer customer){
-        System.out.println("Got a post!");
+    @GetMapping("/customers/{id}")
+    public Customer getCustomer(@PathVariable long id){
+        return this.customerService.findById(id);
+    }
+    @GetMapping("/customers/{id}/accounts")
+    public Set<Account> getCustomerAccount(@PathVariable long id){
+        return this.customerService.findById(id).getAccounts();
+    }
+    @PostMapping("/customers/{id}/accounts")
+    public void setCustomerAccount(@PathVariable long id, @RequestBody Account account){
+        Customer customer = this.customerService.findById(id);
+        customer.addAccount(account);
         this.customerService.saveCustomer(customer);
     }
+    //@PostMapping("/customers/{id}/accounts")
+
 
     @GetMapping("/branches")
     public List<Branch> listAllBranches(){ return this.branchService.listAll(); }
@@ -38,5 +56,31 @@ public class BankRESTController {
         System.out.println("Got a post!");
         System.out.println(branch);
         this.branchService.saveBranch(branch);
+    }
+    @GetMapping("/branches/{id}")
+    public Branch getBranch(@PathVariable long id){
+        return this.branchService.findById(id);
+    }
+
+    @GetMapping("/branches/{id}/bankusers")
+    public List<BankUser> listAllBankUsers(@PathVariable long id){
+        return this.bankUserService.listAll();
+    }
+
+    @PostMapping("/branches/{id}/bankusers")
+    public void saveBankUser(@RequestBody BankUser bankUser,@PathVariable long id){
+        System.out.println("Got a post!");
+        this.branchService.saveBankUser(id, bankUser);
+    }
+    @GetMapping("/branches/{id}/customers")
+    public Set<Customer> listAllCustomers(@PathVariable long id){ return this.branchService.listAllCustomers(id);}
+
+    @PostMapping("/branches/{id}/customers")
+    public void saveCustomer(@RequestBody Customer customer, @PathVariable long id){
+        this.branchService.saveCustomer(customer,id);
+    }
+    @GetMapping("/branches/{id}/bankusers/{bid}")
+    public BankUser getBankUsers(@PathVariable long id, @PathVariable long bid){
+        return  null;
     }
 }
