@@ -44,7 +44,7 @@ public class Branch {
         List<BankUser> bankUsers = new ArrayList<>(this.bankUsers);
         System.out.println(bankUsers);
         Collections.shuffle(bankUsers);
-        return bankUsers.get(0);
+        return bankUsers.size() > 0 ? bankUsers.get(0): null;
     }
 
     @Override

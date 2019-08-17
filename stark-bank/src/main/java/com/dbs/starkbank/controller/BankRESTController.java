@@ -44,8 +44,15 @@ public class BankRESTController {
     }
     @GetMapping("/customers/{id}/accounts/{aid}/transactions")
     public Set<Transaction> getCustomerTransactions(@PathVariable long id, @PathVariable long aid){
-       return  null;
+
+        return  this.customerService.getTransctions(id,aid);
     }
+    @PostMapping("/customers/{id}/accounts/{aid}/transactions")
+    public void getCustomerTransactions(@PathVariable long id, @PathVariable long aid,@RequestBody Transaction transaction){
+    this.customerService.saveTransaction(id,aid,transaction);
+
+    }
+
     //@PostMapping("/customers/{id}/accounts")
 
 

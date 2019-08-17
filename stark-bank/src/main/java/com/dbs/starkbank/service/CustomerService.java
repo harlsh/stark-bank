@@ -1,9 +1,11 @@
 package com.dbs.starkbank.service;
 
 import com.dbs.starkbank.model.Customer;
+import com.dbs.starkbank.model.Transaction;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface CustomerService {
@@ -11,5 +13,6 @@ public interface CustomerService {
     List<Customer> listAll();
     Customer findById(long id);
     void deleteCustomer(long id);
-    Acc
+    Set<Transaction> getTransctions(long id, long aid);
+    Transaction saveTransaction(long id, long aid, Transaction transaction);
 }

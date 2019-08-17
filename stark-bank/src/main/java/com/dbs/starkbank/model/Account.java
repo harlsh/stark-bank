@@ -37,6 +37,13 @@ public class Account {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<Transaction> transactions = new HashSet<>();
 
+    public void addTransactions(Transaction transaction)
+    {
+        this.transactions.add(transaction);
+        transaction.setCreditedAccount(this);
+        transaction.setDebitedAccount(this);
+
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

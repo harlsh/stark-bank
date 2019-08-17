@@ -1,8 +1,7 @@
 package com.dbs.starkbank.service;
 
-import com.dbs.starkbank.model.BankUser;
-import com.dbs.starkbank.model.Branch;
-import com.dbs.starkbank.model.Customer;
+import com.dbs.starkbank.model.*;
+import com.dbs.starkbank.repository.AccountRepository;
 import com.dbs.starkbank.repository.BankUserRepository;
 import com.dbs.starkbank.repository.BranchRepository;
 import com.dbs.starkbank.repository.CustomerRepository;
@@ -18,9 +17,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     CustomerRepository customerRepository;
     BranchRepository branchRepository;
+    AccountRepository accountRepository;
+
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository, BranchRepository branchRepository){
+    public CustomerServiceImpl(CustomerRepository customerRepository, BranchRepository branchRepository, AccountRepository accountRepository){
         this.branchRepository = branchRepository;
+        this.accountRepository=accountRepository;
         this.customerRepository = customerRepository;
     }
 //    @Override
@@ -52,6 +54,26 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.deleteById(id);
     }
 
+    @Override
+    public Set<Transaction> getTransctions(long id, long aid) {
+        Customer customer= this.customerRepository.findById(id).get();
+        Account account= this.accountRepository.findById(aid).get();
+        if (customer.getAccounts().contains(account))
+        {
+            return account.getTransactions();
+        }
+        return null;
+
+    }
+
+    @Override
+    public Transaction saveTransaction(long id, long aid, Transaction transaction) {
+        Customer customer= this.customerRepository.findById(id).get();
+        Account account= this.accountRepository.findById(aid).get();
+        account.addTransactions(transaction);
+        this.accountRepository.save(account);
+       return transaction;
+    }
 
 
 }
