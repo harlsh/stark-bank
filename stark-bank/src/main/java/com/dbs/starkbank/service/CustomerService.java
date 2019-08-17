@@ -15,4 +15,5 @@ public interface CustomerService {
     void deleteCustomer(long id);
     Set<Transaction> getTransctions(long id, long aid);
     Transaction saveTransaction(long id, long aid, Transaction transaction);
+    Customer editCustomer(long id, Customer customer);
 }

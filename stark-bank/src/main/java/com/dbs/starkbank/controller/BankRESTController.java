@@ -52,6 +52,11 @@ public class BankRESTController {
     this.customerService.saveTransaction(id,aid,transaction);
 
     }
+    @PostMapping("/customers/{id}/update")
+    public void editCustomer(long id, Customer customer)
+    {
+        this.customerService.editCustomer(id,customer);
+    }
 
     //@PostMapping("/customers/{id}/accounts")
 
