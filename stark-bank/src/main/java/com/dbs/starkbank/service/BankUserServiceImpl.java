@@ -3,6 +3,7 @@ package com.dbs.starkbank.service;
 import com.dbs.starkbank.model.BankUser;
 import com.dbs.starkbank.model.Customer;
 import com.dbs.starkbank.repository.BankUserRepository;
+import com.dbs.starkbank.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ import java.util.Optional;
 @Service
 public class BankUserServiceImpl implements BankUserService {
     BankUserRepository bankUserRepository;
+    CustomerRepository customerRepository;
 
     @Autowired
-    public BankUserServiceImpl(BankUserRepository bankUserRepository){
+    public BankUserServiceImpl(BankUserRepository bankUserRepository, CustomerRepository customerRepository){
         this.bankUserRepository = bankUserRepository;
+        this.customerRepository = customerRepository;
     }
     @Override
     public BankUser saveBankUser(BankUser bankUser) {
@@ -42,5 +45,15 @@ public class BankUserServiceImpl implements BankUserService {
     @Override
     public Customer saveCustomer(long id) {
         return null;
+    }
+
+    @Override
+    public void createCustomerLogin(long id, long bid, long cid){
+        Customer customer = this.customerRepository.findById(cid).get();
+        BankUser bankUser = customer.getBankUser();
+        if(bankUser.getCustomers().contains(customer)){
+            bankUser.createCustomerLogin(customer);
+        }
+        this.customerRepository.save(customer);
     }
 }

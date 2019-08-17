@@ -28,6 +28,10 @@ public class BankUser {
         this.customers.add(customer);
         customer.setBankUser(this);
     }
+
+    public void createCustomerLogin(Customer customer){
+        customer.setLogin(true);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

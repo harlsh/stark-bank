@@ -11,4 +11,5 @@ public interface BankUserService {
     BankUser findById(long id);
     void deleteBankUser(long id);
     Customer saveCustomer(long id);
+    void createCustomerLogin(long id, long bid, long cid);
 }

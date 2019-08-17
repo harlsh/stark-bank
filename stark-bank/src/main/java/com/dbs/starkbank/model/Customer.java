@@ -28,6 +28,8 @@ public class Customer {
     private String password;
 
     @JsonIgnore
+    private boolean login = false;
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     private Branch branch;
 
