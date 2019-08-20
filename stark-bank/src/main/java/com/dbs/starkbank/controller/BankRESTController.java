@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
-
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1")
 public class BankRESTController {
@@ -52,10 +52,17 @@ public class BankRESTController {
     this.customerService.saveTransaction(id,aid,transaction);
 
     }
-    @PostMapping("/customers/{id}/update")
-    public void editCustomer(long id, Customer customer)
+
+    @PostMapping("/customers/{id}/accounts/{aid}/transactions/withdraw")
+    public void withdraw(@PathVariable long id, @PathVariable long aid,@RequestBody Transaction transaction)
     {
-        this.customerService.editCustomer(id,customer);
+        this.customerService.saveTransaction(id,aid,transaction);
+    }
+    @PutMapping("/customers/{id}/")
+    public void editCustomer(@PathVariable("id") long id,@RequestBody Customer customer) {
+        //System.out.println(" Inside the constroller method ");
+        //System.out.println(customer);
+       this.customerService.editCustomer(id,customer);
     }
 
     //@PostMapping("/customers/{id}/accounts")

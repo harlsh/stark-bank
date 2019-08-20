@@ -16,4 +16,5 @@ public interface CustomerService {
     Set<Transaction> getTransctions(long id, long aid);
     Transaction saveTransaction(long id, long aid, Transaction transaction);
     Customer editCustomer(long id, Customer customer);
+    Transaction withdraw(long id, long aid, Transaction transaction);
 }
