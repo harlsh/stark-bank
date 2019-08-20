@@ -25,6 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
         this.accountRepository=accountRepository;
         this.customerRepository = customerRepository;
     }
+
 //    @Override
 //    public Customer saveCustomer(Customer customer, long id) {
 //        Branch branch = branchRepository.findById(id).get();
@@ -84,7 +85,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer1=this.customerRepository.findById(id).get();
 
 
-        customer1=customer;
+        customer1.setFirstName(customer.getFirstName());
 
         return this.customerRepository.save(customer1);
     }
