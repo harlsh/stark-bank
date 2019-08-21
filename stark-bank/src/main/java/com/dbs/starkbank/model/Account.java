@@ -2,6 +2,8 @@ package com.dbs.starkbank.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -11,7 +13,8 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +23,7 @@ public class Account {
     private long accountNumber;
 
     private String accountName;
-
+    @JsonIgnore
     private double balance;
 
     @ToString.Exclude

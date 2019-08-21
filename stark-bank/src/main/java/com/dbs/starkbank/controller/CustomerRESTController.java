@@ -52,10 +52,16 @@ public class CustomerRESTController {
         this.customerService.editCustomer(id,customer);
     }
 
-    @PostMapping("/customers/{id}/accounts/{aid}/transactions/withdraw")
+    @PostMapping("/{id}/accounts/{aid}/transactions/withdraw")
     public void withdraw(@PathVariable long id, @PathVariable long aid,@RequestBody Transaction transaction)
-    {
-        this.customerService.saveTransaction(id,aid,transaction);
+    {System.out.println("%%%%%%%%%%%%%%%");
+        this.customerService.withdraw(id,aid,transaction);
+        System.out.println("%%%%%%%%%%%%%%%");
     }
-
+    @PostMapping("/{id}/accounts/{aid}/transactions/deposit")
+    public void deposit(@PathVariable long id, @PathVariable long aid,@RequestBody Transaction transaction)
+    {System.out.println("%%%%%%%%%%%%%%%");
+        this.customerService.deposit(id,aid,transaction);
+        System.out.println("%%%%%%%%%%%%%%%");
+    }
 }
