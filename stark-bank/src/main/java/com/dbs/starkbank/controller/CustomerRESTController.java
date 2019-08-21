@@ -52,4 +52,10 @@ public class CustomerRESTController {
         this.customerService.editCustomer(id,customer);
     }
 
+    @PostMapping("/customers/{id}/accounts/{aid}/transactions/withdraw")
+    public void withdraw(@PathVariable long id, @PathVariable long aid,@RequestBody Transaction transaction)
+    {
+        this.customerService.saveTransaction(id,aid,transaction);
+    }
+
 }
