@@ -29,6 +29,9 @@ public class Customer {
 
     @JsonIgnore
     private boolean login = false;
+
+    @JsonIgnore
+    private String[] parameters=new String[]{"id","phoneNumber","firstName","lastName","gender","dateOfBirth","nationalId","userId","password"};
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     private Branch branch;
@@ -47,6 +50,10 @@ public class Customer {
     public void addAccount(Account account){
         this.accounts.add(account);
         account.setCustomer(this);
+    }
+    //returning the parameters
+    public String[] getParameters(){
+        return  this.parameters;
     }
     @Override
     public boolean equals(Object o) {

@@ -21,6 +21,7 @@ public class Branch {
     @OneToMany(mappedBy="branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Account> accounts = new HashSet<>();
 
+    @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy="branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<BankUser> bankUsers = new HashSet<>();
