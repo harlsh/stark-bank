@@ -4,6 +4,7 @@ import com.dbs.starkbank.model.*;
 import com.dbs.starkbank.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,13 +13,13 @@ import java.util.Set;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    CustomerRepository customerRepository;
-    BranchRepository branchRepository;
-    AccountRepository accountRepository;
-    TransactionRepository transactionRepository;
+   private CustomerRepository customerRepository;
+    private BranchRepository branchRepository;
+   private AccountRepository accountRepository;
+    private TransactionRepository transactionRepository;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository, BranchRepository branchRepository, AccountRepository accountRepository){
+    public CustomerServiceImpl(CustomerRepository customerRepository, BranchRepository branchRepository, AccountRepository accountRepository, TransactionRepository transactionRepository){
         this.branchRepository = branchRepository;
         this.accountRepository=accountRepository;
         this.customerRepository = customerRepository;
@@ -111,14 +112,46 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public Transaction withdraw(long id, long aid, Transaction transaction) {
+        System.out.println("$$$$$$$$");
         Customer customer= this.customerRepository.findById(id).get();
+        //customer.getAccounts().
+
+        System.out.println(customer);
+
         Account account= this.accountRepository.findById(aid).get();
+
+        System.out.println(" Account "+ account.getBalance());
+        System.out.println("Account name "+account.getAccountName());
+
+        System.out.println("=====================Before========================");
+       // Transaction trans= this.transactionRepository.find
+
         account.setBalance(account.getBalance()-transaction.getTransactionAmount());
+        System.out.println("Account balance after updating " +account.getBalance());
         System.out.println("**************" + account.getBalance());
+        transaction.setAccountBalance(account.getBalance());
+
         //Account account1= transaction.getDebitedAccount();
         account.addTransactions(transaction);
+
         this.accountRepository.save(account);
+        this.customerRepository.save(customer);
+        return transaction;
+    }
+
+    @Override
+    @Transactional
+    public Transaction deposit(long id, long aid, Transaction transaction) {
+        Customer customer= this.customerRepository.findById(id).get();
+        Account account= this.accountRepository.findById(aid).get();
+        account.setBalance(account.getBalance()+transaction.getTransactionAmount());
+        transaction.setAccountBalance(account.getBalance());
+        account.addTransactions(transaction);
+
+        this.accountRepository.save(account);
+        this.customerRepository.save(customer);
         return transaction;
     }
 

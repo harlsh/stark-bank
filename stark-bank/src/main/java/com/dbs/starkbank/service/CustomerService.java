@@ -17,5 +17,9 @@ public interface CustomerService {
     Transaction saveTransaction(long id, long aid, Transaction transaction);
     Customer editCustomer(long id, Customer customer);
     Transaction withdraw(long id, long aid, Transaction transaction);
+<<<<<<< HEAD
     Set<Customer> findByUserId(String userId);
+=======
+    Transaction deposit(long id, long aid, Transaction transaction);
+>>>>>>> 2176c06f38c65d7ef9cef19ec707369523009281
 }
