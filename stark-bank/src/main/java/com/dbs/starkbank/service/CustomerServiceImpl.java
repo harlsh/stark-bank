@@ -122,5 +122,9 @@ public class CustomerServiceImpl implements CustomerService {
         return transaction;
     }
 
+    @Override
+    public Set<Customer> findByUserId(String userId) {
+        return this.customerRepository.findByUserId(userId);
+    }
 
 }

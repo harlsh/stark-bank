@@ -28,8 +28,6 @@ public class BranchRESTController {
 
     @PostMapping("/")
     public void saveBranch(@RequestBody Branch branch){
-        System.out.println("Got a post!");
-        System.out.println(branch);
         this.branchService.saveBranch(branch);
     }
     @GetMapping("/{id}")

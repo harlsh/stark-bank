@@ -23,7 +23,9 @@ public class Customer {
     private String lastName;
     private String gender;
     private String dateOfBirth;
+    @Column(unique = true)
     private String nationalId;
+    @Column(unique = true)
     private String userId;
     private String password;
 

@@ -17,4 +17,5 @@ public interface CustomerService {
     Transaction saveTransaction(long id, long aid, Transaction transaction);
     Customer editCustomer(long id, Customer customer);
     Transaction withdraw(long id, long aid, Transaction transaction);
+    Set<Customer> findByUserId(String userId);
 }

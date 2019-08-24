@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +15,7 @@ public class Transaction {
     private long id;
 
     private double transactionAmount;
-
+    private LocalDate transactionTime;
     @ManyToOne
     @JoinColumn(name = "credited_account", nullable = false)
     private Account creditedAccount;
