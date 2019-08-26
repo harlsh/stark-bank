@@ -16,7 +16,7 @@ public class BankUser {
     private long id;
     private String userName;
     private String password;
-    @OneToMany(mappedBy = "bankUser", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "bankUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Customer> customers = new HashSet<>();
 
     @JsonIgnore

@@ -29,7 +29,7 @@ public class Customer {
     private String userId;
     private String password;
 
-    @JsonIgnore
+
     private boolean login = false;
 
     @JsonIgnore
