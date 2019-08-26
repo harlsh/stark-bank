@@ -28,6 +28,7 @@ public class BranchRESTController {
 
     @PostMapping("/")
     public void saveBranch(@RequestBody Branch branch){
+        System.out.println(branch);
         this.branchService.saveBranch(branch);
     }
     @GetMapping("/{id}")
@@ -59,6 +60,7 @@ public class BranchRESTController {
 
     @PostMapping("/{id}/customers")
     public void saveCustomer(@RequestBody Customer customer, @PathVariable long id){
+        System.out.println("Got a customer creation Post!");
         this.branchService.saveCustomer(customer,id);
     }
 }

@@ -13,6 +13,8 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column( unique = true)
+    private String branchName;
     private String ifsc ;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -40,8 +42,10 @@ public class Branch {
         this.customers.add(customer);
         customer.setBranch(this);
     }
+
     @JsonIgnore
     public BankUser getRandomBankUser(){
+        System.out.println(this.bankUsers);
         List<BankUser> bankUsers = new ArrayList<>(this.bankUsers);
         System.out.println(bankUsers);
         Collections.shuffle(bankUsers);

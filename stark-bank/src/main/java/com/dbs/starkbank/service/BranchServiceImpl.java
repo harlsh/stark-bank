@@ -68,6 +68,7 @@ public class BranchServiceImpl implements BranchService {
     @Transactional
     @Override
     public Customer saveCustomer(Customer customer, long id) {
+        System.out.println("Saving customer: " + customer);
         Branch branch = this.branchRepository.findById(id).get();
         branch.addCustomer(customer);
         this.branchRepository.save(branch);
@@ -77,8 +78,10 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public void assignBankUser(Customer customer) {
-        System.out.println(customer.getBranch());
+        System.out.println("assigning the customer a bankuser");
+        System.out.println("branch = " + customer.getBranch());
         BankUser bankUser = customer.getBranch().getRandomBankUser();
+        System.out.println("The bankuser is " + bankUser);
         bankUser.addCustomer(customer);
         this.bankUserRepository.save(bankUser);
     }
