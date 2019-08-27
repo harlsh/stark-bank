@@ -82,7 +82,7 @@ public class BranchServiceImpl implements BranchService {
         BankUser bankUser = customer.getBranch().getRandomBankUser();
         System.out.println("The bankuser is " + bankUser);
         bankUser.addCustomer(customer);
-        this.bankUserRepository.save(bankUser);
+        this.branchRepository.save(customer.getBranch());
     }
 
 }

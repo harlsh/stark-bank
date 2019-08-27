@@ -21,7 +21,11 @@ public class CustomerRESTController {
     public List<Customer> listAllCustomers(){
         return this.customerService.listAll();
     }
-
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable long id){
+        System.out.println("Deleting Customer");
+        this.customerService.deleteCustomer(id);
+    }
     @GetMapping("/{id}")
     public Customer getCustomer(@PathVariable long id){
         return this.customerService.findById(id);

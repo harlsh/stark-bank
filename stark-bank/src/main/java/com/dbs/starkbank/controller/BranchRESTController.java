@@ -6,6 +6,7 @@ import com.dbs.starkbank.model.Branch;
 import com.dbs.starkbank.model.Customer;
 import com.dbs.starkbank.service.BankUserService;
 import com.dbs.starkbank.service.BranchService;
+import com.dbs.starkbank.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -24,6 +26,9 @@ public class BranchRESTController {
 
     @Autowired
     private BankUserService bankUserService;
+
+    @Autowired
+    private CustomerService customerService;
 
     @GetMapping("/")
     public List<Branch> listAllBranches(){ return this.branchService.listAll(); }
@@ -50,8 +55,15 @@ public class BranchRESTController {
         this.branchService.saveBankUser(id, bankUser);
     }
     @GetMapping("/{id}/bankusers/{bid}")
-    public BankUser GetBankUser(@PathVariable long id, @PathVariable long bid){
+    public BankUser getBankUser(@PathVariable long id, @PathVariable long bid){
         return this.bankUserService.findById(bid);
+    }
+
+    @GetMapping("/{id}/bankusers/{bid}/customerlist")
+    public Set<Customer> getBankUserCustomer(@PathVariable long id, @PathVariable long bid){
+        return this.bankUserService.findById(bid).getCustomers().stream()
+                .filter( c-> !c.isLogin())
+                .collect(Collectors.toSet());
     }
     @PostMapping("/{id}/bankusers/login")
     public List<Object> bankUserLogin(@PathVariable long id, @RequestBody BankUser bankUser){
@@ -64,6 +76,7 @@ public class BranchRESTController {
         set.add(x);
         return set;
     }
+
 
     @PostMapping("/{id}/bankusers/{bid}/createLogin/{cid}")
     public void createCustomerLogin(@PathVariable long id, @PathVariable long cid, @PathVariable long bid){
@@ -78,4 +91,5 @@ public class BranchRESTController {
         System.out.println("Got a customer creation Post!");
         this.branchService.saveCustomer(customer,id);
     }
+    
 }
