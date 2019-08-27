@@ -71,7 +71,6 @@ public class BranchServiceImpl implements BranchService {
         System.out.println("Saving customer: " + customer);
         Branch branch = this.branchRepository.findById(id).get();
         branch.addCustomer(customer);
-        this.branchRepository.save(branch);
         assignBankUser(customer);
         return customer;
     }

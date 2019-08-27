@@ -9,6 +9,8 @@ import com.dbs.starkbank.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,8 +39,9 @@ public class BranchRESTController {
     }
 
     @GetMapping("/{id}/bankusers")
-    public List<BankUser> listAllBankUsers(@PathVariable long id){
-        return this.bankUserService.listAll();
+    public Set<BankUser> listAllBankUsers(@PathVariable long id){
+
+        return this.branchService.listAllBankUsers(id);
     }
 
     @PostMapping("/{id}/bankusers")
@@ -50,9 +53,21 @@ public class BranchRESTController {
     public BankUser GetBankUser(@PathVariable long id, @PathVariable long bid){
         return this.bankUserService.findById(bid);
     }
+    @PostMapping("/{id}/bankusers/login")
+    public List<Object> bankUserLogin(@PathVariable long id, @RequestBody BankUser bankUser){
+        List<Object> set = new ArrayList<>();
+        List<BankUser> bankUsers = new ArrayList<BankUser>(this.branchService.listAllBankUsers(id));
+        Set<Customer> customers = bankUsers.contains(bankUser)?
+                this.branchService.listAllCustomers(id): null;
+        set.add(customers);
+        long x = bankUsers.stream().filter( b -> b.equals(bankUser)).findFirst().get().getId();
+        set.add(x);
+        return set;
+    }
 
     @PostMapping("/{id}/bankusers/{bid}/createLogin/{cid}")
     public void createCustomerLogin(@PathVariable long id, @PathVariable long cid, @PathVariable long bid){
+        System.out.println("Creating customer login");
         this.bankUserService.createCustomerLogin(id, bid, cid);
     }
     @GetMapping("/{id}/customers")

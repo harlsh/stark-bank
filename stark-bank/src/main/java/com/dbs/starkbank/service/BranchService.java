@@ -19,5 +19,6 @@ public interface BranchService {
     BankUser getBankUser(long id, long bid);
     Set<Customer> listAllCustomers(long id);
     Customer saveCustomer(Customer customer, long id);
+
     public void assignBankUser(Customer customer);
 }

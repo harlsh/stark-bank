@@ -35,9 +35,8 @@ public class BankUser {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BankUser)) return false;
         BankUser bankUser = (BankUser) o;
-        return id == bankUser.id;
+        return bankUser.getUserName().equals(this.getUserName()) && bankUser.getPassword().equals(this.getPassword());
     }
 
     @Override

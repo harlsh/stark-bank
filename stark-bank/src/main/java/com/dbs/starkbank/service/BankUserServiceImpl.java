@@ -50,7 +50,10 @@ public class BankUserServiceImpl implements BankUserService {
     @Override
     public void createCustomerLogin(long id, long bid, long cid){
         Customer customer = this.customerRepository.findById(cid).get();
+        System.out.println(customer);
         BankUser bankUser = customer.getBankUser();
+        System.out.println(bankUser);
+        System.out.println(bankUser.getCustomers());
         if(bankUser.getCustomers().contains(customer)){
             bankUser.createCustomerLogin(customer);
         }
