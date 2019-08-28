@@ -4,6 +4,7 @@ import com.dbs.starkbank.model.Account;
 import com.dbs.starkbank.model.Customer;
 import com.dbs.starkbank.model.Transaction;
 import com.dbs.starkbank.service.CustomerService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,14 @@ public class CustomerRESTController {
     @GetMapping("/")
     public List<Customer> listAllCustomers(){
         return this.customerService.listAll();
+    }
+
+    @PostMapping("/login")
+    public Customer customerLogin(@RequestBody ObjectNode json){
+        System.out.println("Loggin in");
+        System.out.println(json);
+        System.out.println("the user id is " + json.get("userId").asText());
+        return this.customerService.loginCustomer(json.get("userId").asText(), json.get("password").asText());
     }
     @DeleteMapping("/{id}")
     public void deleteCustomer(@PathVariable long id){
@@ -50,10 +59,10 @@ public class CustomerRESTController {
         this.customerService.saveTransaction(id,aid,transaction);
 
     }
-    @PutMapping("/{id}/")
-    public void editCustomer(long id, Customer customer)
+    @PutMapping("/{id}")
+    public Customer editCustomer(@PathVariable long id, @RequestBody Customer customer)
     {
-        this.customerService.editCustomer(id,customer);
+        return this.customerService.editCustomer(id,customer);
     }
 
     @PostMapping("/{id}/accounts/{aid}/transactions/withdraw")

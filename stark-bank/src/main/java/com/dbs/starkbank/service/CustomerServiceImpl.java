@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -153,6 +154,13 @@ public class CustomerServiceImpl implements CustomerService {
         this.accountRepository.save(account);
         this.customerRepository.save(customer);
         return transaction;
+    }
+
+    @Override
+    public Customer loginCustomer(String userId, String password) {
+        Customer customer = new ArrayList<Customer>(this.customerRepository.findByUserId(userId)).get(0);
+        System.out.println("The customer is: " + customer);
+        return customer.getPassword().equals(password)?customer:null;
     }
 
     @Override

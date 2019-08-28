@@ -19,5 +19,6 @@ public interface CustomerService {
     Transaction withdraw(long id, long aid, Transaction transaction);
     Set<Customer> findByUserId(String userId);
     Transaction deposit(long id, long aid, Transaction transaction);
+    Customer loginCustomer(String userId, String password);
 
 }
