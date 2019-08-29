@@ -57,7 +57,6 @@ public class CustomerRESTController {
     @PostMapping("/{id}/accounts/{aid}/transactions")
     public void getCustomerTransactions(@PathVariable long id, @PathVariable long aid,@RequestBody Transaction transaction){
         this.customerService.saveTransaction(id,aid,transaction);
-
     }
     @PutMapping("/{id}")
     public Customer editCustomer(@PathVariable long id, @RequestBody Customer customer)

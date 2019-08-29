@@ -14,7 +14,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
- private double accountBalance;
+    private double accountBalance;
     private double transactionAmount;
     private LocalDate transactionTime;
     @ManyToOne

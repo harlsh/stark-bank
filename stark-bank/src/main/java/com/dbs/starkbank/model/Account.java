@@ -23,7 +23,7 @@ public class Account {
     private long accountNumber;
 
     private String accountName;
-    @JsonIgnore
+
     private double balance;
 
     @ToString.Exclude
