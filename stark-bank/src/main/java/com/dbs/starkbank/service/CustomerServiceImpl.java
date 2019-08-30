@@ -163,7 +163,37 @@ public class CustomerServiceImpl implements CustomerService {
         return customer.getPassword().equals(password)?customer:null;
     }
 
-    @Override
+  @Override
+  public Transaction transfer(long id, long aid, Transaction transaction) {
+    Account account1 = transaction.getCreditedAccount();
+     Account account2 = transaction.getDebitedAccount();
+
+
+    account1.setBalance(account1.getBalance()+transaction.getTransactionAmount());
+    account2.setBalance(account2.getBalance()-transaction.getTransactionAmount());
+    System.out.println(account1);
+    System.out.println(account2);
+    transaction.setAccountBalance(account1.getBalance());
+    transaction.setAccountBalance(account2.getBalance());
+
+    account1.addTransactions(transaction);
+    account2.addTransactions(transaction);
+
+    this.accountRepository.save(account1);
+    this.accountRepository.save(account2);
+
+    Customer customer= this.customerRepository.findById(id).get();
+    this.customerRepository.save(customer);
+
+    return transaction;
+    }
+
+  @Override
+  public Account findByAccountId(long aid) {
+    return new ArrayList<Account>(this.accountRepository.findByAccountNumber(aid)).get(0);
+  }
+
+  @Override
     public Set<Customer> findByUserId(String userId) {
         return this.customerRepository.findByUserId(userId);
     }

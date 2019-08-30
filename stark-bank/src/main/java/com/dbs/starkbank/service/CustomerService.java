@@ -1,5 +1,6 @@
 package com.dbs.starkbank.service;
 
+import com.dbs.starkbank.model.Account;
 import com.dbs.starkbank.model.Customer;
 import com.dbs.starkbank.model.Transaction;
 import org.springframework.stereotype.Repository;
@@ -20,5 +21,6 @@ public interface CustomerService {
     Set<Customer> findByUserId(String userId);
     Transaction deposit(long id, long aid, Transaction transaction);
     Customer loginCustomer(String userId, String password);
-
+    Transaction transfer(long id, long aid, Transaction transaction);
+    Account findByAccountId(long aid);
 }

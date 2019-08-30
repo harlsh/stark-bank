@@ -43,8 +43,9 @@ public class Account {
     public void addTransactions(Transaction transaction)
     {
         this.transactions.add(transaction);
-        transaction.setCreditedAccount(this);
-        transaction.setDebitedAccount(this);
+
+        transaction.setCreditedAccount(transaction.getCreditedAccount());
+        transaction.setDebitedAccount(transaction.getDebitedAccount());
 
     }
     @Override

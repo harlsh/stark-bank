@@ -54,6 +54,11 @@ public class CustomerRESTController {
 
         return  this.customerService.getTransctions(id,aid);
     }
+
+    @GetMapping("/{id}/accounts/{aid}/account")
+    public Account getCustomerAccountByAccountNo(@PathVariable long id, @PathVariable long aid){
+      return this.customerService.findByAccountId(aid);
+    }
     @PostMapping("/{id}/accounts/{aid}/transactions")
     public void getCustomerTransactions(@PathVariable long id, @PathVariable long aid,@RequestBody Transaction transaction){
         this.customerService.saveTransaction(id,aid,transaction);
@@ -72,10 +77,16 @@ public class CustomerRESTController {
     public void deposit(@PathVariable long id, @PathVariable long aid,@RequestBody Transaction transaction){
         this.customerService.deposit(id,aid,transaction);
     }
+    @PostMapping("/{id}/accounts/{aid}/transactions/transfer")
+    public void transfer(@PathVariable long id, @PathVariable long aid, @RequestBody Transaction transaction){
+      System.out.println("TRANSFERRRRR");
+      this.customerService.transfer(id,aid, transaction);
+    }
     @PostMapping("/")
     public void findCustomer(@RequestBody String userId){
         System.out.println(userId);
         Set<Customer> customers = this.customerService.findByUserId(userId);
         System.out.println(customers);
     }
+
 }
